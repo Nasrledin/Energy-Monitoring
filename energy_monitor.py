@@ -1,6 +1,5 @@
 # !/usr/bin/env python
 # import required libraries
-import RPi,GPIO as GPIO
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from time import sleep, gmtime, strftime, localtime
@@ -8,22 +7,15 @@ import datetime
 import os
 import minimalmodbus
 
-#------------------------------------------------------------------------------
-#       Raspberry Pi setup
-#------------------------------------------------------------------------------
-
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(21, GPIO.IN, pull_up_down= GPIO.PUD_UP) # GPIO 21 as input
-
 #--------------------------------------------------------------------------------
 #       Initialization
 #---------------------------------------------------------------------------------
 
 #$$$    1. LOG File setup       $$$$
 
-#file = open("/home/pi/scripts_pi/SDM120/energy_logger.log","r")  # open the log file to read the last logge$
-#size =  os.stat("/home/pi/scripts_pi/SDM120/energy_logger.log").st_size  # get the size of the log file
-#if os.stat("/home/pi/scripts_pi/SDM120/energy_logger.log").st_size == 0:
+#file = open("/home/pi/SDM120/energy_logger.log","r")  # open the log file to read the last logge$
+#size =  os.stat("/home/pi/SDM120/energy_logger.log").st_size  # get the size of the log file
+#if os.stat("/home/pi/SDM120/energy_logger.log").st_size == 0:
 #file_list = file.readlines()
 #last_value = file_list[len(file_list)-1] # get the last entry  in the log file 'button.log'
 #print "Last logged value is: ", last_value
@@ -85,7 +77,7 @@ def read_total_energy():                       # Read Total active energy functi
 
 
 def log_data():                          # Data logging  function to log electrical parameters into log file 'energy_logger.log'
-        file = open("/home/pi/scripts_pi/SDM120/energy_logger.log","a")
+        file = open("/home/pi/SDM120/energy_logger.log","a")
         now = strftime("%d %b %Y %H:%M:%S", localtime()) # get current timestamp
         file.write(str(now)+","+str(read_voltage())+","+str(read_current())+","+str(read_active_power())+","+str(read_total_energy())+"\n")
         file.flush()
@@ -93,9 +85,8 @@ def log_data():                          # Data logging  function to log electri
 
 #$$$            main loop               $$$#
 
-while True:
-        now = strftime("%d %b %Y %H:%M:%S", localtime()) # get current timestamp
-        data_set = [now, read_voltage(), read_current(), read_active_power(), read_total_energy()]      # data package to be sent to Google sheet
-        worksheet.append_row(data_set)  # append the targetted google sheet with the above data set
-        log_data()      # recall log_data function that logs the energy measurement to Log file 'energy_logger.log'
-        sleep(3)
+#while True:
+now = strftime("%d %b %Y %H:%M:%S", localtime()) # get current timestamp
+data_set = [now, read_voltage(), read_current(), read_active_power(), read_total_energy()]      # data package to be sent to Google sheet
+worksheet.append_row(data_set)  # append the targetted google sheet with the above data set
+log_data()      # recall log_data function that logs the energy measurement to Log file 'energy_logger.log'
