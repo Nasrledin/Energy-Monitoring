@@ -7,6 +7,6 @@ This code shall be able to collect electrical system parameters of an AC system
 This file should be edited to enable logging energy measurements into cloud4rpi dashboard. However it is not finalized yet.
 
 
-#REQ
+# REQ
 sudo apt-get install python-pip
 pip install pip oauth2client
