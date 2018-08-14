@@ -9,4 +9,5 @@ This file should be edited to enable logging energy measurements into cloud4rpi 
 
 # REQ
 sudo apt-get install python-pip
+
 pip install pip oauth2client
